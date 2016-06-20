@@ -1,0 +1,51 @@
+{{define "title"}}harvey related stuff{{end}} {{define "content"}}
+<div class="demo-container mdl-grid">
+	<div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+	<div class="demo-content  content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+		<h3>FAQ</h3>
+		<h4>Why no ken c?</h4>
+		<p>
+			Years ago, Plan 9 C was faster than alternatives like GCC. That is no longer true. A full build of all the plan 9 libraries, tools, and kernels takes about 2-3 minutes with Plan 9 c compiler, GCC, and clang. On every push to GitHub we can do a full build
+			with *both* GCC and clang using Travis; eventually, we hope to include icc in that process. There is no longer a good reason to stick with the Plan 9 C compiler and, once the Go team dropped it too, there were lots of good reasons to move away from
+			it. As the original paper from Ken Thomson pointed out, the Plan 9 C compiler only ever produced medium quality code. It also had several bugs with 64-bit scalars that people had to work around in their C code. It was fast but in the end not a very
+			good compiler.
+		</p>
+		<p>
+			Also, an actively developed compiler means an actively developed Static Analyzer. Clang for instance comes with the excellent libclang which should help us to automate a lot of task we do by hand. Further, clang can do optimization at link time, as the
+			Plan 9 C compiler does, and Andy Tannenbaum has told us that this could buy us some real performance improvements. Finally, the clang diagnostics and tools are far better than either GCC or Plan 9 C. For those reasons, some of us view GCC as a stop
+			on the road to using clang, not an end in itself.
+		</p>
+		<p>
+			We've also found and fixed bugs in the kernel and user space that result from some Plan 9 C features, including anonymous struct members.
+		</p>
+		<p>
+			Anonymous struct members are nice, but can lead you into trouble. There was a longstanding deadlock in the USB user level code, for example, resulting from the use of an anon Lock in a Ref that was triggered by code that used the Lock and the Ref at the
+			same time. We discovered it when we removed the anonymity of the Ref and Lock declarations in the struct. In other places, code became much clearer once the anonymity was removed. Anonymous struct members proved to be as much a problem as a benefit.
+			We've worked on Go projects at our companies that used anonymous struct members at first, then stopped using them, for similar reasons.
+		</p>
+		<h4>What are unix's wrinkles?</h4>
+		<p>
+			Unix had many problems, which is why the people who invented Unix abandoned it and started the Plan 9 project in the first place. Here are a few examples:
+			<ul>
+				<li>ptrace</li>
+				<li>sockets</li>
+			</ul>
+		</p>
+		<h4>What is the deal with TTY?</h4>
+		<p>
+			We are not reimplementing ttys. We are  adding a new kernel device, fdmux, which among other things will make it easy for a user level process to support tty-like behavior. We started this project inspired by the work Jim McKie, one of the original Plan 9 authors,  did on the Blue Gene port. He wrote a small tty-like program that gave us the effect of DEL without having to run Rio. We're building on that idea.
+		</p>
+		<h4>Whats with the logo?</h4>
+		<p>
+			Harvey is a the imaginary bunny that was Jimmy Stewart's friend  in the 1950 movie “Harvey”. Spoiler alert: Harvey turned out to be real!
+			<center>
+				<img src="https://harvey-os.org/img/harvey-os-logo.png" alt="" />
+			</center>
+			Our logo, designed by  P. Salazar,is of the invisible bunny, and the shadow it casts is Glenda the Plan 9 bunny drawn by Renee French. We pay homage to the past, in that Harvey's shadow is Glenda, but also show that we are moving forward, in that Harvey is not Glenda.
+			<center>
+				<img src="https://plan9.io/plan9/img/plan9bunnysmwhite.jpg" alt="" />
+			</center>
+		</p>
+	</div>
+</div>
+{{end}}

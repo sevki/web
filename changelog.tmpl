@@ -1,0 +1,15 @@
+{{define "title"}}harvey changelog{{end}}
+{{define "content"}}
+{{ $commits := json "https://api.github.com/repos/Harvey-OS/harvey/commits" }}
+<b>harvey changelog</b>
+<pre>
+	{{ range $commits }}
+	{{ .commit.message }}
+
+A:{{ .commit.author.name }}
+C:{{ .commit.committer.name }}
+<a href="{{ .html_url }}">{{ .sha }}</a>
+
+	{{ end }}
+</pre>
+{{end}}  <!-- content -->

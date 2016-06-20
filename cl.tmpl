@@ -1,0 +1,11 @@
+{{define "title"}}harvey open CLs{{end}}
+{{define "content"}}
+{{ template "feed" . }}
+{{end}}  <!-- context -->
+{{ define "feed" }}{{ $feed := jsonxsfr "https://review.gerrithub.io/changes/?q=project:Harvey-OS%2Fharvey+status:open" }}
+<b>harvey open CLs</b>
+<pre>{{ range  $feed }}{{ $changeURL := printf "https://review.gerrithub.io/changes/%6.f/detail/?o=ALL_REVISIONS&o=ALL_COMMITS" ._number }}{{ $change := jsonxsfr $changeURL }}<a href="https://review.gerrithub.io/#/c/{{  ._number }}/">CL {{  ._number }}</a>	{{ $change.subject }}
+
+{{ end }} <!-- range -->
+</pre>
+{{ end }} <!-- feed -->

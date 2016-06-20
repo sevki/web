@@ -1,0 +1,87 @@
+{{define "title"}}harvey related stuff{{end}} {{define "content"}} {{ template "getting-started" . }}{{ template "feed" . }} {{ template "repos" . }} {{end}}
+<!-- content -->
+{{ define "repos" }}
+<div class="harvey-more-section">
+	<div class="harvey-section-title mdl-typography--display-1-color-contrast">More from Harvey</div>
+	<div class="harvey-card-container mdl-grid">
+		{{ $repos := json "https://api.github.com/users/Harvey-OS/repos?page=1&per_page=100&sort=pushed" }} {{ range $repos }} {{ template "repo" . }} {{ end }}
+	</div>
+</div>
+{{ end }}
+<!-- repos -->
+
+
+{{ define "repo" }}
+<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+	<div class="mdl-card__title">
+		<h4 class="mdl-card__title-text">{{.name}}</h4>
+	</div>
+	<div class="mdl-card__supporting-text">
+		<span class="mdl-typography--font-light mdl-typography--subhead">{{ .description | linkify }}</span>
+	</div>
+	<div class="mdl-card__actions">
+		<a class="harvey-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="https://github.com/Harvey-OS/{{.name}}">
+			 {{.name}}
+			<i class="material-icons">chevron_right</i>
+		 </a>
+	</div>
+</div>
+{{ end }}
+<!-- repo -->
+
+<!-- content -->
+{{ define "feed" }}
+<div class="harvey-more-section" style="padding-top:60px;">
+	<div class="harvey-section-title mdl-typography--display-1-color-contrast">News</div>
+	<div class="harvey-card-container mdl-grid">
+		{{ $feed := json "https://blog.harvey-os.org/.json" }} {{ range $feed }} {{ template "post" . }} {{ end }}
+	</div>
+</div>
+{{ end }}
+<!-- feed -->
+
+{{ define "post" }}
+<div class="post">
+	<h5><a href="{{.Link}}">{{.Title}}</a></h5> {{.Summary}}
+	<br/>
+	<div style="float:right">
+		<a class="harvey-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="{{.Link}}">
+		Read all
+		<i class="material-icons">chevron_right</i>
+	</a>
+	</div>
+</div>
+{{ end }}
+<!-- post -->
+
+{{ define "getting-started" }}
+<div class="harvey-getting-started-section">
+	<div class="harvey-getting-started-section-text">
+		<div style="float:left; margin-right:10px">
+			<img src="images/harvey-os-logo.png" />
+		</div>
+		<div class="mdl-typography--font-light mdl-typography--display-1-color-contrast">What is Harvey?</div>
+
+		<div>
+
+			<p class="mdl-typography--font-light">
+				Harvey is an effort to get the <a href="http://plan9.bell-labs.com/plan9/about.html">Plan 9</a> code working with <a href="https://gcc.gnu.org/">GCC</a> and <a href="http://clang.llvm.org/">clang</a>.
+				<br> Our aim is to provide a modern, distributed, 64 bit operating system that does away with Unix's wrinkles and allows for new ways of working.
+				<br>
+				<br>
+
+				<a class="mdl-button mdl-js-button mdl-button--raised harvey-link mdl-typography--font-light" href="https://github.com/Harvey-OS/harvey/wiki/Getting-Started" >
+					About
+					<i class="material-icons">info</i>
+				</a>
+				<a class="mdl-button mdl-js-button mdl-button--raised harvey-link mdl-typography--font-light" href="https://github.com/Harvey-OS/harvey/wiki/Getting-Started" >
+					Get Started
+					<i class="material-icons">chevron_right</i>
+				</a>
+
+			</p>
+		</div>
+	</div>
+</div>
+{{ end }}
+<!-- Getting Started -->
