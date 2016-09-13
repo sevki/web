@@ -480,7 +480,11 @@ a {
   cursor: pointer;
 }
 
-
+@media (max-width: 1024px) {
+  .harvey-title{
+    margin-top:-7px;
+  }
+}
 /**** Mobile layout ****/
 @media (max-width: 900px) {
   .harvey-navigation-container {
